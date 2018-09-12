@@ -60,19 +60,15 @@ const getNotas = (id) => {
 
 
 
+//sin new Promise, usamos return
+const getResultado = async (id) => {
+  let opositor = await getOpositor(id)
+  const notas = await getNotas(id)
 
-const getResultado = (id) => {
-  let opositor
-  return getOpositor(id).then((data) => {
-    opositor = data
-    return getNotas(opositor.id)
-  }).then((notas) => {
-    let media = 0
-    if (notas.length > 0) {
-      media = notas.map((nota) => nota.nota).reduce((a, b) => a + b) / notas.length
-    }
-    return `${opositor.nombre} tiene una media de ${media} en la oposición de ${opositor.especialidad}`
-  })
+  if (notas.length > 0) {
+    media = notas.map((nota) => nota.nota).reduce((a, b) => a + b) / notas.length
+  }
+  return `${opositor.nombre} tiene una media de ${media} en la oposición de ${opositor.especialidad}`
 }
 
 
